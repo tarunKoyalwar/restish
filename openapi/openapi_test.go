@@ -13,10 +13,10 @@ import (
 	"testing"
 	"testing/iotest"
 
-	"github.com/danielgtaylor/restish/cli"
 	v3 "github.com/pb33f/libopenapi/datamodel/high/v3"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/tarunKoyalwar/restish/cli"
 	"gopkg.in/yaml.v2"
 )
 

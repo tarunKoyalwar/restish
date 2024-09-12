@@ -12,12 +12,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/danielgtaylor/restish/cli"
 	"github.com/danielgtaylor/shorthand/v2"
 	"github.com/logrusorgru/aurora"
 	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/afero"
 	"github.com/spf13/viper"
+	"github.com/tarunKoyalwar/restish/cli"
 )
 
 const (

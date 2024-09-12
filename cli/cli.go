@@ -802,7 +802,7 @@ func Run() (returnErr error) {
 			if cfg, ok := configs[apiName]; ok {
 
 				// This is used to give context to findApi
-				// Smallest fix for https://github.com/danielgtaylor/restish/issues/128
+				// Smallest fix for https://github.com/tarunKoyalwar/restish/issues/128
 				viper.Set("api-name", apiName)
 
 				currentConfig = cfg

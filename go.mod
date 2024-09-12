@@ -1,4 +1,4 @@
-module github.com/danielgtaylor/restish
+module github.com/tarunKoyalwar/restish
 
 go 1.18
 

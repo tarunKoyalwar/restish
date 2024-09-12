@@ -7,11 +7,11 @@ import (
 	"testing"
 
 	"github.com/amzn/ion-go/ion"
-	"github.com/danielgtaylor/restish/cli"
-	"github.com/danielgtaylor/restish/openapi"
 	"github.com/fxamacker/cbor/v2"
 	"github.com/shamaton/msgpack/v2"
 	"github.com/spf13/cobra"
+	"github.com/tarunKoyalwar/restish/cli"
+	"github.com/tarunKoyalwar/restish/openapi"
 )
 
 func BenchmarkFormats(b *testing.B) {

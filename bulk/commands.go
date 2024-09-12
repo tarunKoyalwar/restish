@@ -11,8 +11,6 @@ import (
 	"strings"
 
 	"github.com/danielgtaylor/mexpr"
-	"github.com/danielgtaylor/restish/cli"
-	"github.com/danielgtaylor/restish/openapi"
 	"github.com/danielgtaylor/shorthand/v2"
 	"github.com/hexops/gotextdiff"
 	"github.com/hexops/gotextdiff/myers"
@@ -24,6 +22,8 @@ import (
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/tarunKoyalwar/restish/cli"
+	"github.com/tarunKoyalwar/restish/openapi"
 	"gopkg.in/yaml.v3"
 )
 

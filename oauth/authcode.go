@@ -16,8 +16,8 @@ import (
 
 	"context"
 
-	"github.com/danielgtaylor/restish/cli"
 	"github.com/mattn/go-isatty"
+	"github.com/tarunKoyalwar/restish/cli"
 	"golang.org/x/oauth2"
 )
 

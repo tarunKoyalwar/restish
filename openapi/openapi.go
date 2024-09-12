@@ -14,7 +14,6 @@ import (
 	"strings"
 
 	"github.com/danielgtaylor/casing"
-	"github.com/danielgtaylor/restish/cli"
 	"github.com/danielgtaylor/shorthand/v2"
 	"github.com/gosimple/slug"
 	"github.com/pb33f/libopenapi"
@@ -24,6 +23,7 @@ import (
 	"github.com/pb33f/libopenapi/resolver"
 	"github.com/pb33f/libopenapi/utils"
 	"github.com/spf13/cobra"
+	"github.com/tarunKoyalwar/restish/cli"
 	"golang.org/x/exp/maps"
 )
 
@@ -318,7 +318,7 @@ func openapiOperation(cmd *cobra.Command, method string, uriTemplate *url.URL, p
 		name = override
 	} else if oldName := slug.Make(op.OperationId); oldName != "" && oldName != name {
 		// For backward-compatibility, add the old naming scheme as an alias
-		// if it is different. See https://github.com/danielgtaylor/restish/issues/29
+		// if it is different. See https://github.com/tarunKoyalwar/restish/issues/29
 		// for additional context; we prefer kebab casing for readability.
 		aliases = append(aliases, oldName)
 	}

@@ -3,10 +3,10 @@ package main
 import (
 	"os"
 
-	"github.com/danielgtaylor/restish/bulk"
-	"github.com/danielgtaylor/restish/cli"
-	"github.com/danielgtaylor/restish/oauth"
-	"github.com/danielgtaylor/restish/openapi"
+	"github.com/tarunKoyalwar/restish/bulk"
+	"github.com/tarunKoyalwar/restish/cli"
+	"github.com/tarunKoyalwar/restish/oauth"
+	"github.com/tarunKoyalwar/restish/openapi"
 )
 
 var version string = "dev"
