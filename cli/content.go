@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/alexeyco/simpletable"
 	"github.com/amzn/ion-go/ion"
@@ -197,34 +198,39 @@ func setTable(data []interface{}) ([]byte, error) {
 	table := simpletable.New()
 
 	var headerCells []*simpletable.Cell
-	defineHeader := true
+
+	// dry run and collect all unique headers
+	headers := make(map[string]struct{})
+	for _, maps := range data {
+		if mapData, ok := maps.(map[string]interface{}); ok {
+			for k := range mapData {
+				headers[k] = struct{}{}
+			}
+		}
+	}
+	// sort them and put it in headerCells
+	for k := range headers {
+		headerCells = append(headerCells, &simpletable.Cell{Align: simpletable.AlignCenter, Text: k})
+	}
+	sort.Slice(headerCells, func(i, j int) bool {
+		return headerCells[i].Text < headerCells[j].Text
+	})
+
 	for _, maps := range data {
 		var bodyCells []*simpletable.Cell
 		if mapData, ok := maps.(map[string]interface{}); ok {
-			// Discover headers for repeating objects
-			// Iterate first instance of one of the repeating objects
-			if defineHeader {
-				for k := range mapData {
-					headerCells = append(headerCells, &simpletable.Cell{Align: simpletable.AlignCenter, Text: k})
-				}
-				sort.Slice(headerCells, func(i, j int) bool {
-					return headerCells[i].Text < headerCells[j].Text
-				})
-			}
-			defineHeader = false
-
 			// Add body cells based on order of header cells
 			// Will get out of order otherwise
 			for _, cellKey := range headerCells {
 				if val, ok := mapData[cellKey.Text]; ok {
-					if s, ok := val.([]any); ok {
+					if s, ok := val.([]any); ok && len(s) == 1 {
 						converted := make([]string, len(s))
 						for i := 0; i < len(s); i++ {
 							converted[i] = fmt.Sprintf("%v", s[i])
 						}
 						val = strings.Join(converted, ", ")
 					}
-					bodyCells = append(bodyCells, &simpletable.Cell{Align: simpletable.AlignRight, Text: fmt.Sprintf("%v", val)})
+					bodyCells = append(bodyCells, &simpletable.Cell{Align: simpletable.AlignRight, Text: prettyTableValue(val)})
 				} else {
 					// Use a placeholder instead of returning an error
 					bodyCells = append(bodyCells, &simpletable.Cell{Align: simpletable.AlignRight, Text: "N/A"})
@@ -245,6 +251,23 @@ func setTable(data []interface{}) ([]byte, error) {
 
 	ret := []byte(table.String())
 	return ret, nil
+}
+
+func prettyTableValue(val any) string {
+	v := reflect.ValueOf(val)
+	if v.Kind() == reflect.Slice {
+		if v.Len() > 0 {
+			return fmt.Sprintf("%s (+%d)", prettyTableValue(v.Index(0).Interface()), v.Len()-1)
+		}
+		return "N/A"
+	}
+	if datetime, ok := val.(time.Time); ok {
+		return datetime.Format("2006-01-02 15:04:05 MST")
+	}
+	if datetime, err := time.Parse(time.RFC3339, fmt.Sprint(val)); err == nil {
+		return datetime.Format("2006-01-02 15:04:05 MST")
+	}
+	return fmt.Sprintf("%v", val)
 }
 
 // Gron describes an output format for easier grepping. This is based on the
