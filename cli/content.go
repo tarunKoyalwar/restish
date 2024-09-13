@@ -226,7 +226,8 @@ func setTable(data []interface{}) ([]byte, error) {
 					}
 					bodyCells = append(bodyCells, &simpletable.Cell{Align: simpletable.AlignRight, Text: fmt.Sprintf("%v", val)})
 				} else {
-					return nil, fmt.Errorf("error building table. Header Key not found in repeating object: %s", cellKey.Text)
+					// Use a placeholder instead of returning an error
+					bodyCells = append(bodyCells, &simpletable.Cell{Align: simpletable.AlignRight, Text: "N/A"})
 				}
 			}
 			table.Body.Cells = append(table.Body.Cells, bodyCells)
